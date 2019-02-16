@@ -1,0 +1,55 @@
+{
+  "name": "ArduinoDAQ",
+  "version": "0.0.1-alpha",
+  "description": "Software to Data Aquisition, Visualization and extract from Serial Communications",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "install": "electron-rebuild",
+    "css:lint": "stylelint --config build/.stylelintrc --syntax scss \"scss/**/*.scss\" --cache --cache-location \"build/.stylelintcache/\"",
+    "css:compile": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 assets/scss/main.scss style.css",
+    "css:prefix": "postcss --config build/postcss.config.js --replace \"*.css\" \"!*.min.css\"",
+    "css:minify": "cleancss --level 1 --source-map --source-map-inline-sources --output style.min.css style.css",
+    "css": "npm run css:lint && npm run css:compile && npm run css:prefix && npm run css:minify",
+    "css:watch": "watch 'npm run css' scss"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:DelBianco/ArduinoDAQ.git"
+  },
+  "keywords": [
+    "Electron",
+    "Arduino",
+    "Serial",
+    "Data Visualization",
+    "Data Aquisition"
+  ],
+  "author": "André Del Bianco Giuffrida",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^9.4.7",
+    "clean-css-cli": "^4.2.1",
+    "electron": "^1.4.1",
+    "electron-rebuild": "^1.4.0",
+    "node-sass": "^4.11.0",
+    "postcss-cli": "^6.1.1",
+    "stylelint": "^9.10.1",
+    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-order": "^2.0.0",
+    "stylelint-scss": "^3.5.3",
+    "watch": "^1.0.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.2.1",
+    "popper.js": "^1.12.9",
+    "serialport": "^4.0.7",
+    "tether": "^1.4.0"
+  },
+  "standard": {
+    "globals": [
+      "$"
+    ]
+  }
+}
