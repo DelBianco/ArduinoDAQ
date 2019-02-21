@@ -99,6 +99,4 @@ $('#connect').on('click', function() {
   } else {
     error.set('Selecione uma porta');
   }
-
-
 });

@@ -7,70 +7,92 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="style.min.css">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <title>ArduinoDAQ</title>
 </head>
 <body class="d-flex flex-column h-100">
-<header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">ArduinoDAQ</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <select id="port" class="form-control nav-link">
-                        <option> Select COM</option>
-                    </select>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link btn btn-outline-success my-2 my-sm-0" id="connect">Connect</button>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
 <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
     <div class="container-fluid">
-        <h1 class="mt-5"></h1>
-        <hr>
-        <div class="alert alert-primary" role="alert" id="msg">Mensagens</div>
+        <div class="alert" role="alert" id="msg">Mensagens</div>
         <div class="row">
-            <div class="col-md-6">
-                <table class="table">
-                    <thead id="table-head">
-                        <tr><th>#</th><th>-</th><th>-</th></tr>
-                    </thead>
-                    <tbody id="table-body"></tbody>
-                </table>
+            <div class="col-1">
+                <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist"
+                     aria-orientation="vertical">
+                    <a class="nav-link p-4 border mb-2 active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                       aria-controls="v-pills-home" aria-selected="true"><i class="fa fa-3x fa-chart-line"></i></a>
+                    <a class="nav-link p-4 border mb-2" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                       aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-3x fa-table"></i></a>
+                    <a class="nav-link p-4 border mb-2" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                       aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-3x fa-terminal"></i></a>
+                    <a class="nav-link p-4 border mb-2" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
+                       aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-3x fa-sliders-h"></i></a>
+                </div>
+                <hr>
+                <select id="port" class="form-control mb-2">
+                    <option> Select COM</option>
+                </select>
+                <button class="btn btn-outline-success btn-block" id="connect">Connect</button>
+                <button class="btn btn-outline-danger btn-block" id="disconnect">Disconnect</button>
             </div>
-            <div class="col-md-6">
-                <canvas id="chart"></canvas>
+            <div class="col-11">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                         aria-labelledby="v-pills-home-tab">
+                        <canvas id="myChart" class="chart"></canvas>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                         aria-labelledby="v-pills-profile-tab">
+                        <table class="table">
+                            <thead id="table-head">
+                            <tr>
+                                <th>#</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                            </thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                         aria-labelledby="v-pills-messages-tab">
+                        // FORM ENVIO DE COMANDO
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                         aria-labelledby="v-pills-settings-tab">
+                        // CONFIGURAÇÔES
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </main>
 <footer class="footer mt-auto py-3 bg-dark">
-    <div class="container">
-        <span class="text-muted">Debug</span>
-        <pre class="text-white">
-            <code id="debug"></code>
-        </pre>
-        <pre class="text-danger">
-            <code id="error"></code>
-        </pre>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-1 text-right">
+                <span class="text-muted">Debug</span>
+            </div>
+            <div class="col">
+                <pre id="debug" class="text-white">
+                </pre>
+            </div>
+            <div class="col-1 text-right">
+                <span class="text-muted">Errors</span>
+            </div>
+            <div class="col">
+                <pre id="error" class="text-danger">
+                </pre>
+
+            </div>
+        </div>
     </div>
 </footer>
 </body>
-
 <script>
-  // You can also require other files to run in this process
-  require('./renderer.js');
+  require('./src/app.js');
 </script>
 </html>
