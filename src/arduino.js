@@ -13,25 +13,26 @@ class Arduino {
     this.dataSize = 100;
     this.bufferSize = 5;
     this.refreshRate = 100;
-    this.chart = {
-      data: {
-        labels: [1, 2, 3, 4, 5, 6, 7, 8],
-        datasets: [
-          {
-            borderColor: window.chartColors.red,
-            data: [43.56, 52.39, 59.68, 39.5, 70.36, 61.91, 61.55, 61.12],
-            label: 'D0',
-          }, {
-            borderColor: window.chartColors.orange,
-            data: [33, 22, 24, 50, 61, 80, 61.55, 63],
-            label: 'D1',
-          }, {
-            borderColor: window.chartColors.yellow,
-            data: [80, 61.55, 63, 33, 22, 24, 50, 61],
-            label: 'D2',
-          }],
-      },
-    };
+    this.chart = function() {
+      let data = {
+        labels: this.labels,
+      };
+      let cols = this.data[0].length;
+      for(let i =0 ; i<cols; i++)
+      {
+        this.data.push(
+            {
+              borderColor: window.chartColors.red,
+              data: [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
+              label: 'D0',
+            }
+        );
+        borderColor: window.chartColors.red,
+            data: [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
+          label: 'D0',
+      }
+      return data;
+    }
   }
 
   render() {

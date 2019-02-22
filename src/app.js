@@ -63,7 +63,7 @@ $('#connect').on('click', function() {
 
     setInterval(function() {
       daq.render();
-      chart.data = daq.chart.data;
+      chart.data = daq.chart();
       chart.update();
     },daq.refreshRate);
   } else {
