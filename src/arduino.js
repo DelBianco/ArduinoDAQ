@@ -4,6 +4,7 @@ class Arduino {
     this.data = [];
     this.labels = [];
     this.buffer = [];
+    this.update = true;
     this.alert = {
       error: '',
       msg: 'Arduino DAQ',
@@ -12,25 +13,46 @@ class Arduino {
     this.indexBy = 'first';
     this.dataSize = 100;
     this.bufferSize = 5;
-    this.refreshRate = 100;
+    this.refreshRate = 5;
     this.chart = function() {
       let data = {
-        labels: this.labels,
+        labels: [],
+        datasets: [],
       };
-      let cols = this.data[0].length;
-      for(let i =0 ; i<cols; i++)
-      {
-        this.data.push(
-            {
-              borderColor: window.chartColors.red,
-              data: [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
-              label: 'D0',
+      let update = false;
+      if(this.data.length > 0){
+        let cols = this.data[0].length;
+        for(let i = 0; i<this.dataSize;i++ ) {
+          data.labels[i] = i;
+        }
+        for(let i = 1 ; i<cols; i++)
+        {
+          data.datasets.push(
+              {
+                backgroundColor: window.colors[i-1],
+                borderColor: window.colors[i-1],
+                fill: false,
+                data: [],
+                label: this.labels[i],
+                cubicInterpolationMode: 'monotone',
+              }
+          );
+        }
+        this.data.forEach(function (line,lineIndex) {
+          let index =0;
+          line.forEach(function (col,colIndex) {
+            if(colIndex === 0){
+              index = col;
+            }else{
+              if(data.datasets[colIndex-1].data[index] !== col){
+                data.datasets[colIndex-1].data[index] = col;
+                update = true;
+              }
             }
-        );
-        borderColor: window.chartColors.red,
-            data: [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
-          label: 'D0',
+          })
+        });
       }
+      this.update = update;
       return data;
     }
   }

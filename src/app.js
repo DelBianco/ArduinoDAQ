@@ -12,6 +12,7 @@ window.chartColors = {
   purple: 'rgb(153, 102, 255)',
   grey: 'rgb(201, 203, 207)'
 };
+window.colors = [window.chartColors.red,window.chartColors.orange,window.chartColors.yellow,window.chartColors.green];
 
 
 const SerialPort = require('serialport');
@@ -23,9 +24,8 @@ const daq = new Arduino();
 
 var chart = new Chart($("#myChart"), {
   type: 'line',
-  data: daq.chart.data,
+  data: daq.chart(),
 });
-
 
 let com = null;
 let ports = [];
@@ -55,16 +55,18 @@ $('#connect').on('click', function() {
   if (!(com === null)) {
     daq.alert.msg = "Connected";
     daq.alert.level = "success";
-    port = new SerialPort(com.comName);
+    port = new SerialPort(com.comName,{baudRate:115200});
     port.pipe(parser);
     parser.on('data', function(data) {
       daq.push(data);
     });
-
     setInterval(function() {
       daq.render();
-      chart.data = daq.chart();
-      chart.update();
+      let newData = daq.chart();
+      if(daq.update){
+        chart.data = newData;
+        chart.update(0);
+      }
     },daq.refreshRate);
   } else {
     $('#error').html('Selecione uma porta');
